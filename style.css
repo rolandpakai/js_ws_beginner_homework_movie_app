@@ -36,6 +36,7 @@ header {
   font-size: 1rem;
   padding: 0.5rem 1rem;
   color: #fff;
+  margin-right: 0.5rem;
 }
 
 .search::placeholder {

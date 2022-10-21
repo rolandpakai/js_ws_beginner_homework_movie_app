@@ -4,19 +4,28 @@
 :root {
   --primary-color: #22254b;
   --secondary-color: #373b69;
+  --swiper-navigation-color: white !important;
+  --swiper-theme-color: white !important;
 }
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: var(--primary-color);
-  margin: 0;
+  /*background-color: var(--primary-color);*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 95vh;
+  background: #111;
 }
 
 header {
   padding: 1rem;
   display: flex;
   justify-content: flex-end;
-  background-color: var(--secondary-color);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100;
 }
 
 .search {
@@ -214,3 +223,87 @@ main {
 .movie:hover .overview {
   transform: translateY(0);
 }
+
+.swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.swiper-container {
+	width: 100%;
+	padding-top: 100px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px;
+  height: 100%;
+  background: #000;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+}
+
+.swiper-navBtn{
+  transition: color 0.3s ease;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid #aaa;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.swiper-navBtn:hover{
+  color: #aaa;
+}
+
+.swiper-navBtn::before,
+.swiper-navBtn::after{
+  font-size: 30px;
+}
+
+.swiper-button-next{
+  right: 8px;
+}
+
+.swiper-button-prev{
+  left: 8px;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  border-top: 5px solid #555;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hide {
+ display: none !important;
+}
+
+.show {
+  display: block;
+}
+  

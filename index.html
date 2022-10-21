@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Movie App</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
   <link href="style.css" rel="stylesheet">
   <script src="script.js" defer></script>
 </head>
@@ -14,22 +16,13 @@
         <input type="text" id="search" class="search" placeholder="Search">
       </form>
     </header>
-    <main id="main">
-		<!-- Movie Template
-			<div class="movie">
-				<img src="https://image.tmdb.org/t/p/w1280/pHkKbIRoCe7zIFvqan9LFSaQAde.jpg" alt="Orphan: First Kill">
-				<div class="movie-info">
-					<h3>Orphan: First Kill</h3>
-					<div class="res-circle">
-						<div class="circle-txt">6.8</div>
-					</div>
-				</div>
-				<div class="overview">
-				  <h3>Overview</h3>
-				  After escaping from an Estonian psychiatric facility, Leena Klammer travels to America by impersonating Esther, the missing daughter of a wealthy family. But when her mask starts to slip, she is put against a mother who will protect her family from the murderous “child” at any cost.
-				</div>
-			</div> 
-		-->
-	</main>
+	<div class="loader hide"></div>
+	<div class="swiper swiper-container">
+	  <div class="swiper-wrapper">
+	  </div>
+	  <div class="swiper-button-next swiper-navBtn"></div>
+	  <div class="swiper-button-prev swiper-navBtn"></div>
+	</div>
+  </body>
   </body>
 </html>

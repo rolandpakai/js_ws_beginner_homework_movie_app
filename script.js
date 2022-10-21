@@ -2,56 +2,122 @@ const API_URL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.
 const IMG_PATH = 'https://image.tmdb.org/t/p/w1280'
 const SEARCH_API = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="'
 
-const main = document.getElementById('main')
-const form = document.getElementById('form')
-const search = document.getElementById('search')
+let swiper;
 
-// Get initial movies
-getMovies(API_URL)
+window.addEventListener("load", load(API_URL, true));
 
-async function getMovies(url) {
-    const res = await fetch(url)
-    const data = await res.json()
+function load(url, initSwiper) {
+	toggleSwiper();
+	toggleLoader();
+	clearSwiper();
 
-    showMovies(data.results)
+	setTimeout(() => {
+		fetchData(url).then((result) => {
+			data = result.results;
+			initializeSlides(data).then(() => {
+				toggleLoader();
+				toggleSwiper();
+				if (initSwiper){
+					initializeSwiper();
+				}
+			}).catch(error => {
+			  console.log(error.name + ' ' + error.message)
+			})
+		})
+	}, 1500);
 }
 
-function showMovies(movies) {
-    main.innerHTML = ''
+function toggleLoader() {
+	document.querySelector('.loader').classList.toggle("hide");
+}
 
-    movies.forEach((movie) => {
-        const { title, poster_path, vote_average, overview } = movie
+function toggleSwiper() {
+	document.querySelector('.swiper-container').classList.toggle("hide");
+}
 
-        const movieEl = document.createElement('div')
-        movieEl.classList.add('movie')
+function clearSwiper() {
+	document.querySelector('.swiper-wrapper').innerHTML = '';
+}
 
-        movieEl.innerHTML = `
-            <img src="${IMG_PATH + poster_path}" alt="${title}">
-            <div class="movie-info">
-				<h3>${title}</h3>
-		  			<div class="res-circle">
-						<div class="circle-txt">${vote_average}</div>
+function fetchData(url) {
+	return fetch(url).then((res) => {
+		return res.json();
+	})
+}
+			  
+function initializeSlides(itemsObject) {
+  let items = "";
+		  
+  return new Promise((resolve, reject) => {
+	   clearSwiper();
+	  
+	  itemsObject.forEach((item) => {
+		if(item.poster_path != null) {
+		items += `<div class="swiper-slide">
+					<div class="movie">
+						<img src="https://image.tmdb.org/t/p/w1280${item.poster_path}" alt="${item.title}">
+						<div class="movie-info">
+							<h3>${item.title}</h3>
+							<div class="res-circle">
+								<div class="circle-txt">${item.vote_average}</div>
+							</div>
+						</div>
+						<div class="overview">
+							<h3>Overview</h3>
+							${item.overview}
+						</div>
 					</div>
-            </div>
-            <div class="overview">
-			<h3>Overview</h3>
-				${overview}
-			</div>`;
-			
-        main.appendChild(movieEl)
-    })
+				</div>`;
+		}
+	  });
+	  
+	  if (items != "") {
+		  document.querySelector('.swiper-wrapper').innerHTML = items;
+		  resolve();
+	  } else {
+		 reject({
+			name: 'empty',
+			message: 'Empty items.' 
+		 });
+	  }
+  })
+};
+
+function initializeSwiper() {
+
+	swiper = new Swiper(".swiper-container", {
+		effect: "coverflow",
+		slidesPerView: 1,
+		grabCursor: true,
+		centeredSlides: true,
+		slidesPerView: "auto",
+		loop: true,
+		fade: true,
+		navigation: {
+		  nextEl: ".swiper-button-next",
+		  prevEl: ".swiper-button-prev",
+		},
+		coverflowEffect: {
+		  rotate: 20,
+		  stretch: 0,
+		  depth: 100,
+		  modifier: 1,
+		  slideShadows: true,
+		},
+	});
 }
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault()
 
-    const searchTerm = search.value
 
-    if(searchTerm && searchTerm !== '') {
-        getMovies(SEARCH_API + searchTerm)
+document.querySelector('#form').addEventListener('submit', (e) => {
+    e.preventDefault();
 
+    const searchTerm = document.querySelector('.search').value;
+
+    if(searchTerm && searchTerm !== '') {	
+		load(SEARCH_API + searchTerm, false);
         search.value = ''
     } else {
         window.location.reload()
     }
-})
+});

@@ -10,26 +10,22 @@
 </head>
   <body>
     <header>
-      <form id="form">
-        <input type="text" id="search" class="search" placeholder="Search">
-      </form>
+        <h1>Welcome to the Movie Database</h1>
+        <div id="search-container">
+          <form id="search-field">
+            <img src="magnifying.png" alt="Magnifying glass" width="45" height="45">
+            <input type="text" id="search-value" placeholder="Search Movies Here">
+          </form>
+          <div id="buttons">
+            <button id="search" form="search-field">Search</button>
+            <button id="clear" onclick="clearSearch()">Clear Search</button>
+          </div>
+        </div>     
     </header>
     <main id="main">
-		<!-- Movie Template
-			<div class="movie">
-				<img src="https://image.tmdb.org/t/p/w1280/pHkKbIRoCe7zIFvqan9LFSaQAde.jpg" alt="Orphan: First Kill">
-				<div class="movie-info">
-					<h3>Orphan: First Kill</h3>
-					<div class="res-circle">
-						<div class="circle-txt">6.8</div>
-					</div>
-				</div>
-				<div class="overview">
-				  <h3>Overview</h3>
-				  After escaping from an Estonian psychiatric facility, Leena Klammer travels to America by impersonating Esther, the missing daughter of a wealthy family. But when her mask starts to slip, she is put against a mother who will protect her family from the murderous “child” at any cost.
-				</div>
-			</div> 
-		-->
-	</main>
+
+		<!-- This is the place for the movie cards. -->
+
+	  </main>
   </body>
 </html>

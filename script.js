@@ -3,12 +3,40 @@ const IMG_PATH = 'https://image.tmdb.org/t/p/w1280';
 const SEARCH_API = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query=';
 
 // Selecting the DOM elements
-const main = document.querySelector('#main');
+const track = document.querySelector('.track');
 const searchField = document.querySelector('#search-field');
 const searchValue = document.querySelector('#search-value');
+const prev = document.querySelector('.prev');
+const next = document.querySelector('.next');
+let carouselWidth = document.querySelector('.carousel-container').offsetWidth;
 
-// Loading movie cards with fetched data
-fetchingData(API_URL);
+let clicks = 0;
+let cardListLength = 0;
+
+// Event listeners checking if next or prev buttons are clicked
+next.addEventListener('click', () => {
+  clicks += 1;
+  cardListLength = carouselWidth * clicks;
+  track.style.transform = `translateX(-${cardListLength}px)`;
+  prev.classList.add('show');
+  if (track.offsetWidth - cardListLength < carouselWidth) {
+    next.classList.add('hide');
+  }
+});
+
+prev.addEventListener('click', () => {
+
+  clicks -= 1;
+  cardListLength = carouselWidth * clicks;
+  next.classList.remove('hide');
+  
+  if (clicks === 0) {
+    prev.classList.remove('show');
+  }
+
+  track.style.transform = `translateX(-${cardListLength}px)`;
+
+});
 
 // Adding event listener to check if a search value is submitted, then execute search function
 searchField.addEventListener('submit', (event) => {
@@ -25,6 +53,9 @@ searchField.addEventListener('submit', (event) => {
     }
 
 });
+
+// Loading movie cards with fetched data
+fetchingData(API_URL);
 
 // Clearing search results and reload content
 function clearSearch() {
@@ -51,7 +82,7 @@ async function fetchingData(sourceUrl) {
 
 function loadMovies(movies) {    
 
-    main.innerHTML = '';
+    track.innerHTML = '';
     
     for (let index = 0; index < movies.length; index++) {
         const path = movies[index].poster_path;
@@ -84,8 +115,8 @@ function loadMovies(movies) {
         </div>
         `;
 
-        // Add movie card node into the main element of the page
-        main.append(movieCard);
+        // Add movie card node into the track element of the page
+        track.append(movieCard);
 
     } 
 

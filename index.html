@@ -1,35 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Movie App</title>
-  <link href="style.css" rel="stylesheet">
-  <script src="script.js" defer></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Movie App</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+	<link href="style.css" rel="stylesheet">
+	<script src="script.js"></script>
 </head>
-  <body>
-    <header>
-      <form id="form">
-        <input type="text" id="search" class="search" placeholder="Search">
-      </form>
-    </header>
-    <main id="main">
-		<!-- Movie Template
-			<div class="movie">
-				<img src="https://image.tmdb.org/t/p/w1280/pHkKbIRoCe7zIFvqan9LFSaQAde.jpg" alt="Orphan: First Kill">
-				<div class="movie-info">
-					<h3>Orphan: First Kill</h3>
-					<div class="res-circle">
-						<div class="circle-txt">6.8</div>
-					</div>
-				</div>
-				<div class="overview">
-				  <h3>Overview</h3>
-				  After escaping from an Estonian psychiatric facility, Leena Klammer travels to America by impersonating Esther, the missing daughter of a wealthy family. But when her mask starts to slip, she is put against a mother who will protect her family from the murderous “child” at any cost.
-				</div>
-			</div> 
-		-->
+
+<body>
+
+	<header>
+		<form id="form" onsubmit="loadSearchImages();">
+			<input type="text" id="search" class="search" placeholder="Search">
+		</form>
+	</header>
+
+	<script>
+		var input = document.getElementById("search");
+
+
+		input.addEventListener("keypress", function (event) {
+			if (event.key === "Enter") {
+				event.preventDefault();
+
+				if (input.value == "") {
+					loadDefaultImages();
+				}
+				else {
+					loadSearchImages(input.value);
+
+				}
+			}
+		});
+	</script>
+
+	<main id="main">
+
+		<!-- Swiper -->
+		<div class="swiper mySwiper">
+			<div class="swiper-wrapper" id="sw" />
+			<div class="swiper-pagination"></div>
+		</div>
+
+		<!-- Swiper JS -->
+		<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+		<!-- Initialize Swiper -->
+		<script>
+
+			var swiper = new Swiper(".mySwiper", {
+				effect: "coverflow",
+				grabCursor: true,
+				centeredSlides: true,
+				slidesPerView: "auto",
+				coverflowEffect: {
+					rotate: 50,
+					stretch: 0,
+					depth: 100,
+					modifier: 1,
+					slideShadows: false,
+				},
+				observer: true
+			});
+
+			swiper.on('observerUpdate', function () {
+  				console.log('slide changed');
+			});
+
+			loadDefaultImages();
+
+		</script>
 	</main>
-  </body>
+</body>
+
 </html>
